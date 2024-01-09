@@ -50,7 +50,7 @@ class SCScorer():
                 if mol is None:
                     return np.zeros((self.FP_len,), dtype=np.float32)
                 return np.array(AllChem.GetMorganFingerprintAsBitVect(mol, self.FP_rad, nBits=self.FP_len,
-                    useChirality=True), dtype=np.bool)
+                    useChirality=True), dtype=bool)
         self.mol_to_fp = mol_to_fp
 
         self._restored = True
@@ -95,9 +95,9 @@ class SCScorer():
 
     def _load_vars(self, weight_path):
         if weight_path.endswith('pickle'):
-            import cPickle as pickle
+            import pickle
             with open(weight_path, 'rb') as fid:
-                self.vars = pickle.load(fid)
+                self.vars = pickle.load(fid, encoding='latin1')
                 self.vars = [x.tolist() for x in self.vars]
         elif weight_path.endswith('json.gz'):
             with gzip.GzipFile(weight_path, 'r') as fin:    # 4. gzip
