@@ -22,5 +22,5 @@ molecule = st.text_input('Isomeric SMILES')
 st.write('SCScore of input molecule %.3f' % (score))
 
 m = Chem.MolFromSmiles(molecule)
-img = Draw.MolToImage(m)
+img = Draw.MolToImage(m,size=(1024,1024))
 st.image(img)
